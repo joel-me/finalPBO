@@ -1,39 +1,35 @@
-package jualbeliapp.entities;
+// AkunGame.java
+package jualbeliapp.entities;  // Pastikan sesuai dengan paket proyek Anda
 
 public class AkunGame {
-    private int id;
+    private int id;           // Tambahkan ID jika dibutuhkan di database
     private String namaGame;
-    private String username;
-    private double harga;
+    private String username;  // Tambahkan atribut username
+    private double harga;     // Tambahkan atribut harga
     private String deskripsi;
+    private boolean terjual;
 
-    // Constructor with all fields
+    // Konstruktor untuk inisialisasi nama game, deskripsi, username, dan harga
     public AkunGame(int id, String namaGame, String username, double harga, String deskripsi) {
         this.id = id;
         this.namaGame = namaGame;
         this.username = username;
         this.harga = harga;
         this.deskripsi = deskripsi;
+        this.terjual = false;  // Default nilai terjual adalah false
     }
 
-    // Constructor without 'id' (for creating new game records)
+    // Konstruktor tanpa ID (untuk insert baru)
     public AkunGame(String namaGame, String username, double harga, String deskripsi) {
         this.namaGame = namaGame;
         this.username = username;
         this.harga = harga;
         this.deskripsi = deskripsi;
+        this.terjual = false;  // Default nilai terjual adalah false
     }
 
-    // Constructor for creating an AkunGame with just 'namaGame' and 'deskripsi'
-    public AkunGame(String namaGame, String deskripsi) {
-        this.namaGame = namaGame;
-        this.deskripsi = deskripsi;
-        // Default values for username and harga (you can modify as needed)
-        this.username = "";
-        this.harga = 0.0;
-    }
+    // Getter dan Setter untuk semua atribut
 
-    // Getter and Setter methods for all fields
     public int getId() {
         return id;
     }
@@ -72,5 +68,13 @@ public class AkunGame {
 
     public void setDeskripsi(String deskripsi) {
         this.deskripsi = deskripsi;
+    }
+
+    public boolean isTerjual() {
+        return terjual;
+    }
+
+    public void setTerjual(boolean terjual) {
+        this.terjual = terjual;
     }
 }

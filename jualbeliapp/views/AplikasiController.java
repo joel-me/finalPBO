@@ -106,6 +106,17 @@ public class AplikasiController {
         String namaGame = input.nextLine();
         System.out.print("Masukkan deskripsi game: ");
         String deskripsi = input.nextLine();
-        jualAkunGameUseCase.execute(namaGame, deskripsi);
+
+        // Ambil username dari pengguna yang sedang login
+        String username = penggunaAktif.getUsername();  // Pastikan 'getUsername' ada di class Pengguna
+
+        // Minta harga dari pengguna
+        System.out.print("Masukkan harga game: ");
+        double harga = input.nextDouble();
+        input.nextLine(); // Konsumsi newline
+
+        // Panggil use case untuk menjual akun game
+        jualAkunGameUseCase.execute(namaGame, username, harga, deskripsi);
     }
+
 }
