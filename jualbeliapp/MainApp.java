@@ -18,7 +18,7 @@ public class MainApp {
         Scanner input = new Scanner(System.in);
 
         // Initialize database configuration
-        Database database = new Database("my_database", "root", "password", "localhost", "3306");
+        Database database = new Database("my_database", "root", "", "localhost", "3306");
 
         // Set up database connection
         database.setup();
