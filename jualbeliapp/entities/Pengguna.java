@@ -20,7 +20,7 @@ class Pengguna {
 }
 
 // AkunGame.java
-class AkunGame {
+public class AkunGame {
     private String namaGame;
     private String deskripsi;
     private boolean terjual;
