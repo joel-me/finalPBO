@@ -1,5 +1,10 @@
 package jualbeliapp.views;
 
+import jualbeliapp.entities.Pengguna;
+import jualbeliapp.usecases.JualAkunGameUseCase;
+import jualbeliapp.usecases.LoginUseCase;
+import jualbeliapp.usecases.RegistrasiUseCase;
+
 import java.util.Scanner;
 
 public class AplikasiController {
@@ -9,6 +14,7 @@ public class AplikasiController {
     private final JualAkunGameUseCase jualAkunGameUseCase;
     private Pengguna penggunaAktif = null;
 
+    // Constructor that only takes the necessary parameters
     public AplikasiController(Scanner input,
                               RegistrasiUseCase registrasiUseCase,
                               LoginUseCase loginUseCase,
@@ -35,7 +41,7 @@ public class AplikasiController {
                         login();
                         break;
                     case 3:
-                        isRunning = false;
+                        isRunning = false; // Exit the application
                         break;
                     default:
                         System.out.println("Pilihan tidak valid!");
@@ -51,6 +57,7 @@ public class AplikasiController {
                         break;
                     case 2:
                         penggunaAktif = null; // Logout
+                        System.out.println("Anda berhasil logout.");
                         break;
                     default:
                         System.out.println("Pilihan tidak valid!");
