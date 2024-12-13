@@ -1,4 +1,3 @@
-// Pengguna.java
 package jualbeliapp.entities;
 
 public class Pengguna {

@@ -1,13 +1,14 @@
 package jualbeliapp;
 
 import jualbeliapp.config.Database;
-import jualbeliapp.repositories.AkunGameRepository;
-import jualbeliapp.repositories.AkunGameRepositoryImpl;
 import jualbeliapp.repositories.PenggunaRepository;
 import jualbeliapp.repositories.PenggunaRepositoryImpl;
-import jualbeliapp.usecases.JualAkunGameUseCase;
-import jualbeliapp.usecases.LoginUseCase;
+import jualbeliapp.repositories.AkunGameRepository;
+import jualbeliapp.repositories.AkunGameRepositoryImpl;
+import jualbeliapp.usecases.BeliAkunGameUseCase;
 import jualbeliapp.usecases.RegistrasiUseCase;
+import jualbeliapp.usecases.LoginUseCase;
+import jualbeliapp.usecases.JualAkunGameUseCase;
 import jualbeliapp.views.AplikasiController;
 
 import java.sql.Connection;
@@ -26,15 +27,17 @@ public class MainApp {
 
         // Initialize repositories and use cases
         PenggunaRepository penggunaRepository = new PenggunaRepositoryImpl(connection);
-        AkunGameRepository akunGameRepository = new AkunGameRepositoryImpl(connection);  // Pass connection here
+        AkunGameRepository akunGameRepository = new AkunGameRepositoryImpl(connection);
 
         // Initialize use cases
         RegistrasiUseCase registrasiUseCase = new RegistrasiUseCase(penggunaRepository);
         LoginUseCase loginUseCase = new LoginUseCase(penggunaRepository);
         JualAkunGameUseCase jualAkunGameUseCase = new JualAkunGameUseCase(akunGameRepository);
+        BeliAkunGameUseCase beliAkunGameUseCase = new BeliAkunGameUseCase(akunGameRepository);
+
 
         // Initialize controller
-        AplikasiController controller = new AplikasiController(input, registrasiUseCase, loginUseCase, jualAkunGameUseCase);
+        AplikasiController controller = new AplikasiController(input, registrasiUseCase, loginUseCase, jualAkunGameUseCase, beliAkunGameUseCase);
 
         // Start the application
         controller.start();

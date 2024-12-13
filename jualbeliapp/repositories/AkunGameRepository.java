@@ -1,11 +1,17 @@
 package jualbeliapp.repositories;
 
 import jualbeliapp.entities.AkunGame;
+import java.util.List;
 
 public interface AkunGameRepository {
-    // Method to save a game account
     void simpanAkunGame(AkunGame akunGame);
 
-    // Method to search for a game account by name
-    AkunGame cariAkunGame(String namaGame);
+    // Menambahkan method untuk mendapatkan semua akun game
+    List<AkunGame> getAllAkunGame();
+
+    // Menambahkan method untuk mendapatkan akun game berdasarkan ID
+    AkunGame getAkunGameById(int id);
+
+    // Menambahkan method untuk memperbarui akun game (set terjual)
+    void updateAkunGame(AkunGame akunGame);
 }

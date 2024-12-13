@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * Kelas untuk mengelola koneksi database.
+ */
 public class Database {
     private final String dbName;
     private final String userName;
@@ -13,13 +16,13 @@ public class Database {
     private Connection connection;
 
     /**
-     * Constructor to initialize the database configuration.
+     * Konstruktor untuk menginisialisasi konfigurasi database.
      *
-     * @param dbName    The database name
-     * @param userName  The database username
-     * @param password  The database password
-     * @param host      The database host (e.g., localhost)
-     * @param port      The database port (e.g., 3306)
+     * @param dbName    Nama database
+     * @param userName  Username database
+     * @param password  Password database
+     * @param host      Host database (misalnya localhost)
+     * @param port      Port database (misalnya 3306)
      */
     public Database(final String dbName, final String userName, final String password, final String host, final String port) {
         this.dbName = dbName;
@@ -30,44 +33,46 @@ public class Database {
     }
 
     /**
-     * Method to retrieve the current database connection.
+     * Mendapatkan koneksi database saat ini.
      *
-     * @return The active database connection
+     * @return Koneksi database aktif
      */
     public Connection getConnection() {
         return connection;
     }
 
     /**
-     * Setup the database connection using the provided configuration details.
-     * This will initialize the database connection and print a success message.
+     * Mengatur koneksi database menggunakan detail konfigurasi yang diberikan.
+     * Ini akan menginisialisasi koneksi ke database dan mencetak pesan keberhasilan.
      */
     public void setup() {
-        // Define MySQL connection URL template
+        // Menentukan template URL koneksi MySQL
         String mysqlConnUrlTemplate = "jdbc:mysql://%s:%s/%s";
 
         try {
-            // Ensure that the MySQL JDBC driver is loaded
+            // Memastikan driver MySQL dimuat
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            // Create a connection to the database
+            // Membuat koneksi ke database
             connection = DriverManager.getConnection(
                     String.format(mysqlConnUrlTemplate, host, port, dbName),
                     userName, password
             );
 
-            // Success message
-            System.out.println("Database connected!");
+            // Pesan keberhasilan koneksi
+            if (connection != null && !connection.isClosed()) {
+                System.out.println("Database connected!");
+            }
 
         } catch (SQLException | ClassNotFoundException e) {
-            // Throw a runtime exception if any error occurs
+            // Menangani kesalahan jika terjadi kesalahan dalam koneksi
             System.err.println("Database connection failed: " + e.getMessage());
             throw new RuntimeException("Failed to connect to the database.", e);
         }
     }
 
     /**
-     * Close the database connection if it is not null.
+     * Menutup koneksi database jika tidak null dan belum tertutup.
      */
     public void closeConnection() {
         try {
@@ -77,6 +82,49 @@ public class Database {
             }
         } catch (SQLException e) {
             System.err.println("Error closing the database connection: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Mengatur auto-commit untuk transaksi database.
+     * Jika Anda ingin mengelola transaksi secara manual, pastikan auto-commit dimatikan.
+     */
+    public void disableAutoCommit() {
+        try {
+            if (connection != null && !connection.getAutoCommit()) {
+                connection.setAutoCommit(false);  // Nonaktifkan auto-commit
+                System.out.println("Auto-commit disabled.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error disabling auto-commit: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Melakukan commit secara manual jika auto-commit dinonaktifkan.
+     */
+    public void commitTransaction() {
+        try {
+            if (connection != null) {
+                connection.commit();
+                System.out.println("Transaction committed.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error committing transaction: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Melakukan rollback jika terjadi error dalam transaksi dan auto-commit dinonaktifkan.
+     */
+    public void rollbackTransaction() {
+        try {
+            if (connection != null) {
+                connection.rollback();
+                System.out.println("Transaction rolled back.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error rolling back transaction: " + e.getMessage());
         }
     }
 }
